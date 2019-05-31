@@ -1,0 +1,28 @@
+﻿@model IEnumerable<SeriesApp.Models.Series>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="mycarousel" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        @foreach (var item in Model)
+        {
+            <li data-target="#mycarousel" data-slide-to=@item.ID></li>
+        }
+    </ul>
+    <div class="carousel-inner">
+        @foreach (var item in Model)
+        {
+            <div class="@("carousel-item " + (item.ID == 1 ? "active" : ""))">
+                <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgCarousel" />
+            </div>
+        }
+    </div>
+
+    <a class="carousel-control-prev" href="#mycarousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#mycarousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>

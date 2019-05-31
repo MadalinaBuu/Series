@@ -1,0 +1,161 @@
+﻿@model IEnumerable<SeriesApp.Models.Series>
+@{
+    ViewBag.Title = "Index";
+    var username = User.Identity.Name;
+}
+
+@using (Html.BeginForm())
+{
+    <br />
+    <div class="container overlay">
+        <hr />
+        <div style="display: flex;justify-content: space-between;">
+            <div style="align-self: center;font-size: x-large;font-weight: 900;">Unseen series</div>
+            <div style="display: inline-flex;">
+                <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew" title="Add new serial" style="min-width: 150px;"><i class="fa fa-plus"></i>Add new</button>
+            </div>
+        </div>
+        <hr />
+
+        <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewSerial" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addNewSerial">Add new serial</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                            <div class="control-group row-fluid form-inline">
+                                <label>Name: </label>
+                                <div class="controls">
+                                    <input type="text" name="name" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="control-group row-fluid form-inline">
+                                <label>Source:</label>
+                                <div class="controls">
+                                    <input type="text" name="source" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="check_public">
+                                <label class="form-check-label" for="exampleCheck1">Public</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table id="SeriesList">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="card-group">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Seen == 0)
+                        {
+                            <td>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
+                                            <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
+                                        </a>
+                                        <div class="card-body" style="text-align: center; display: grid;">
+                                            <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                            <a class="pointer-arrow btn btn-primary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
+                                            <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-primary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+    <div class="container overlay">
+        <hr />
+        <div style="display: flex;justify-content: space-between;">
+            <div style="align-self: center;font-size: x-large;font-weight: 900;">Seen series</div>
+            <div style="display: inline-flex;">
+                <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
+            </div>
+        </div>
+        <br />
+        <hr />
+
+        <table id="SeenSeriesList">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="card-group">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Seen == 1)
+                        {
+                            <td>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
+                                            <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
+                                        </a>
+                                        <div class="card-body" style="text-align: center; display: grid;">
+                                            <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                            <a class="pointer-arrow btn btn-primary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function search(searchedVal, table) {
+        var value = searchedVal.toLowerCase().trim();
+        $("#" + table + " .card").filter(function () {
+            $(this).toggle($(this).find('.card-title').text().toLowerCase().indexOf(value) > -1)
+        });
+    }
+
+    function deleteRow(id) {
+        var r = confirm("Are you sure you want to delete this record?");
+        if (r == true) {
+            window.location.assign("/Home/Delete/" + id);
+        }
+    }
+</script>
+<style type="text/css">
+    .pointer-arrow:hover {
+        cursor: pointer;
+    }
+</style>
