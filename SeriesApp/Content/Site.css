@@ -10,9 +10,7 @@
     padding-right: 15px;
 }
 
-input,
-select,
-textarea {
+.mw280 { /*see if it's used*/
     max-width: 280px;
 }
 

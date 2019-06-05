@@ -40,7 +40,9 @@ namespace SeriesApp.Controllers
                     string source = "Images/" + Utile.RemoveSpecialCharacters(name + Path.GetExtension(Request.Form["source"])).ToLower();
                     dbSerial.Source = source;
 
-                    if (!String.IsNullOrEmpty(name))
+                    bool serialAlreadyExists = dbSeries.Series.Any(s => s.Source == source && s.Name == name);
+
+                    if (!String.IsNullOrEmpty(name) && !serialAlreadyExists)
                     {
                         SaveImage(Request.Form["source"], name);
                         dbSeries.Series.Add(dbSerial);
@@ -129,13 +131,5 @@ namespace SeriesApp.Controllers
             }
             return RedirectToAction("Index");
         }
-        //public ActionResult Carousel()
-        //{
-        //    List<Series> imgList = new List<Series>();
-
-        //    imgList.Add(new Series(){ Source = "" });
-
-        //    return PartialView("_Carousel", imgList);
-        //}
     }
 }
