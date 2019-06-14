@@ -373,8 +373,8 @@ C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Razor.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.WebPages.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.WebPages.Razor.xml
-C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.csprojAssemblyReference.cache
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.csproj.CoreCompileInputs.cache
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.csproj.CopyComplete
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.dll
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.pdb
+C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.csprojAssemblyReference.cache
