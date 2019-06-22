@@ -131,5 +131,27 @@ namespace SeriesApp.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public JsonResult AddEpisodes(int id)
+        {
+            var db = new MainDbContext();
+            var result = false;
+            using (db)
+            {
+                for (int i = 1; i <= Convert.ToInt32(Request.Form["episodesNo"]); i++)
+                {
+                    var dbEpisode = db.Episodes.Create();
+                    dbEpisode.No = i;
+                    dbEpisode.Season = Convert.ToInt32(Request.Form["seasonNo"]);
+                    dbEpisode.Title = "Episode " + i;
+                    dbEpisode.Serial = id;
+                    dbEpisode.Seen = 0;
+                    db.Episodes.Add(dbEpisode);
+                    db.SaveChanges();
+                    result = true;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

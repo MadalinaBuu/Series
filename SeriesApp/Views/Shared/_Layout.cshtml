@@ -39,7 +39,7 @@
         </div>
     </nav>
     <div class="container body-content">
-        @if (@User.Identity.IsAuthenticated && Request.Path != "/Auth/Registration" && Request.Path != "/Auth/Login" && !Request.Path.Contains("Edit"))
+        @if (@User.Identity.IsAuthenticated && Request.Path != "/Auth/Registration" && Request.Path != "/Auth/Login" && !Request.Path.Contains("Edit") && !Request.Path.Contains("Episodes"))
         {
             var Carousel = Html.Partial("~/Views/Home/_Carousel.cshtml");
             @Carousel

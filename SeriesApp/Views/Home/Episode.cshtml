@@ -1,0 +1,39 @@
+﻿@model SeriesApp.Models.Series
+@{
+    ViewBag.Title = "Episode";
+}
+
+@{
+    MainDbContext db = new MainDbContext();
+    var episodes = db.Episodes.Where(s => s.Serial == Model.ID).ToList();
+    var seasons = episodes.GroupBy(s => s.Season).Count();
+
+    for (int i = 1; i <= seasons; i++)
+    {
+        string collapse, collapseId = String.Empty;
+        collapse = "#collapse" + i;
+        collapseId = "collapse" + i;
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href=@collapse>
+                            Season @i
+                        </a>
+                    </h4>
+                </div>
+                <div id=@collapseId class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul>
+                            @foreach (var ep in episodes.Where(s => s.Season == i))
+                            {
+                                <li>@ep.Title</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
