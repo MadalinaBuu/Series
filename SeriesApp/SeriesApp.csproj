@@ -152,10 +152,6 @@
     <Content Include="Images\gossipgirl.png" />
     <Content Include="Images\ziuaincaremisascrisdestinul.jpg" />
     <Content Include="Scripts\script.js" />
-    <Content Include="Views\Home\Images\cat.jpg" />
-    <Content Include="Views\Home\Images\dragosteinalbsinegru.png" />
-    <Content Include="Views\Home\Images\gossipgirl.png" />
-    <Content Include="Views\Home\Images\ziuaincaremisascrisdestinul.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -202,6 +198,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -235,7 +232,6 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Registration.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
-    <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -248,7 +244,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\_Carousel.cshtml" />
-    <Content Include="Views\Home\Episode.cshtml" />
+    <Content Include="Views\Home\_SeasonsAndEpisodes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

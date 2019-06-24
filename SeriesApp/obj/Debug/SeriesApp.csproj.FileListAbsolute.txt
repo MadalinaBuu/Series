@@ -377,3 +377,4 @@ C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\roslyn\vbc.exe.config
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\roslyn\vbc.rsp
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\roslyn\VBCSCompiler.exe
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\obj\Debug\SeriesApp.csprojAssemblyReference.cache

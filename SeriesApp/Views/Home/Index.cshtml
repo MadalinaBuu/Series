@@ -76,9 +76,11 @@
                                             <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                         </a>
                                         <div class="card-body" style="text-align: center; display: grid;">
-                                            <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
-                                            <a class="pointer-arrow btn btn-primary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
-                                            <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-primary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
+                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;">
+                                                <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                                </a>
+                                                <a class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
+                                                <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-primary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
                                         </div>
                                     </div>
                                 </div>

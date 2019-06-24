@@ -1,6 +1,6 @@
-﻿using SeriesApp.App_Start;
-using SeriesApp.CustomLibraries;
+﻿using SeriesApp.CustomLibraries;
 using SeriesApp.Models;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
@@ -11,7 +11,6 @@ namespace SeriesApp.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        // GET: Auth
         [HttpGet]
         public ActionResult Index()
         {
@@ -44,18 +43,13 @@ namespace SeriesApp.Controllers
                     var materializeName = getName.ToList();
                     var name = materializeName[0];
 
-                    var getCountry = db.Users.Where(u => u.Email == model.Email).Select(u => u.Country);
-                    var materializeCountry = getCountry.ToList();
-                    var country = materializeCountry[0];
-
                     var getEmail = db.Users.Where(u => u.Email == model.Email).Select(u => u.Email);
                     var materializeEmail = getEmail.ToList();
                     var email = materializeEmail[0];
 
                     var identity = new ClaimsIdentity(new[] {
                             new Claim(ClaimTypes.Name, name),
-                            new Claim(ClaimTypes.Email, email),
-                            new Claim(ClaimTypes.Country, country)
+                            new Claim(ClaimTypes.Email, email)
                      }, "ApplicationCookie");
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
@@ -82,6 +76,10 @@ namespace SeriesApp.Controllers
         [HttpPost]
         public ActionResult Registration(Users model)
         {
+            if (string.IsNullOrEmpty(model.Name))
+            {
+                ModelState.AddModelError("Name", "The Name field is required.");
+            }
             if (ModelState.IsValid)
             {
                 using (var db = new MainDbContext())
@@ -93,7 +91,6 @@ namespace SeriesApp.Controllers
                         var user = db.Users.Create();
                         user.Email = model.Email;
                         user.Password = encryptedPassword;
-                        user.Country = model.Country;
                         user.Name = model.Name;
                         db.Users.Add(user);
                         db.SaveChanges();

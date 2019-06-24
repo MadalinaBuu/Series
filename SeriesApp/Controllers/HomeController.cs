@@ -13,10 +13,10 @@ namespace SeriesApp.Controllers
     public class HomeController : Controller
     {
         Claim sessionEmail = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Email);
+        MainDbContext db = new MainDbContext();
 
         public ActionResult Index()
         {
-            var db = new MainDbContext();
             return View(db.Series.ToList());
         }
         [HttpPost]
@@ -24,13 +24,12 @@ namespace SeriesApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var dbSeries = new MainDbContext())
+                using (db)
                 {
-                    var userId = dbSeries.Users.Where(u => u.Email == sessionEmail.Value).Select(u => u.Id).ToList();
+                    List<int> userId = db.Users.Where(u => u.Email == sessionEmail.Value).Select(u => u.Id).ToList();
                     string name = Request.Form["name"];
 
-                    var dbSerial = dbSeries.Series.Create();
-
+                    var dbSerial = db.Series.Create();
                     dbSerial.User_ID = userId[0];
                     dbSerial.Name = name;
 
@@ -39,13 +38,13 @@ namespace SeriesApp.Controllers
                     string source = "Images/" + Utile.RemoveSpecialCharacters(name + Path.GetExtension(Request.Form["source"])).ToLower();
                     dbSerial.Source = source;
 
-                    bool serialAlreadyExists = dbSeries.Series.Any(s => s.Source == source && s.Name == name);
+                    bool serialAlreadyExists = db.Series.Any(s => s.Source == source && s.Name == name);
 
-                    if (!String.IsNullOrEmpty(name) && !serialAlreadyExists)
+                    if (!string.IsNullOrEmpty(name) && !serialAlreadyExists)
                     {
                         SaveImage(Request.Form["source"], name);
-                        dbSeries.Series.Add(dbSerial);
-                        dbSeries.SaveChanges();
+                        db.Series.Add(dbSerial);
+                        db.SaveChanges();
                     }
                 }
             }
@@ -53,13 +52,12 @@ namespace SeriesApp.Controllers
             {
                 ModelState.AddModelError("", "Incorrect format has been placed");
             }
-            var listTable = new MainDbContext();
-            return View(listTable.Series.ToList());
+            return View(db.Series.ToList());
         }
         public void SaveImage(string url, string filename)
         {
             byte[] data;
-            string ext = String.Empty;
+            string ext = string.Empty;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | (SecurityProtocolType)3072;
             using (WebClient client = new WebClient())
             {
@@ -70,23 +68,19 @@ namespace SeriesApp.Controllers
             {
                 System.IO.File.WriteAllBytes(Server.MapPath("Images/") + Utile.RemoveSpecialCharacters(filename).ToLower() + ext, data);
             }
-            catch(Exception ex) { }
+            catch(Exception) { }
         }
-
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var db = new MainDbContext();
-            var model = new Series();
-            model = db.Series.Find(id);
-            return View(model);
+            Series serial = new Series();
+            serial = db.Series.Find(id);
+            return View(serial);
         }
         [HttpPost]
         public ActionResult Edit(Series serial)
         {
-            var db = new MainDbContext();
-
             if (ModelState.IsValid)
             {
                 db.Entry(serial).State = EntityState.Modified;
@@ -98,29 +92,24 @@ namespace SeriesApp.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var db = new MainDbContext();
-            var model = db.Series.Find(id);
-
-            if (model == null)
-            {
+            Series serial = db.Series.Find(id);
+            if (serial == null)
                 return HttpNotFound();
-            }
 
-            db.Series.Remove(model);
+            db.Series.Remove(serial);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
         public ActionResult Seen(int? id)
         {
-            var db = new MainDbContext();
-            var list = db.Series.Find(id);
+            Series serial = db.Series.Find(id);
             if (id != null)
             {
                 if (ModelState.IsValid)
                 {
-                    list.Seen = 1;
+                    serial.Seen = 1;
 
-                    db.Entry(list).State = EntityState.Modified;
+                    db.Entry(serial).State = EntityState.Modified;
                     db.SaveChanges();
                 }
             }
@@ -129,8 +118,7 @@ namespace SeriesApp.Controllers
         [HttpPost]
         public JsonResult AddEpisodes(int id)
         {
-            var db = new MainDbContext();
-            var result = false;
+            bool result = false;
             using (db)
             {
                 for (int i = 1; i <= Convert.ToInt32(Request.Form["episodesNo"]); i++)
@@ -150,7 +138,6 @@ namespace SeriesApp.Controllers
         }
         public ActionResult Carousel()
         {
-            MainDbContext db = new MainDbContext();
             List<Series> series = new List<Series>();
             int id = 0;
             if (!User.Identity.IsAuthenticated)

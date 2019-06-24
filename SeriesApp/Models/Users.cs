@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace SeriesApp.Models
 {
@@ -17,8 +16,6 @@ namespace SeriesApp.Models
         public string Password { get; set; }
 
         public string Name { get; set; }
-
-        public string Country { get; set; }
 
     }
 }
