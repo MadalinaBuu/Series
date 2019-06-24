@@ -34,13 +34,14 @@ namespace SeriesApp.Controllers
                     dbSerial.User_ID = userId[0];
                     dbSerial.Name = name;
 
-                    if (Request.Form["check_public"] != null) dbSerial.Public = 1;
-                    else dbSerial.Public = 0;
+                    dbSerial.Public = Convert.ToBoolean(Request.Form["Public"]) == true;
 
                     string source = "Images/" + Utile.RemoveSpecialCharacters(name + Path.GetExtension(Request.Form["source"])).ToLower();
                     dbSerial.Source = source;
 
-                    if (!String.IsNullOrEmpty(name))
+                    bool serialAlreadyExists = dbSeries.Series.Any(s => s.Source == source && s.Name == name);
+
+                    if (!String.IsNullOrEmpty(name) && !serialAlreadyExists)
                     {
                         SaveImage(Request.Form["source"], name);
                         dbSeries.Series.Add(dbSerial);
@@ -82,21 +83,17 @@ namespace SeriesApp.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult Edit(Series list)
+        public ActionResult Edit(Series serial)
         {
             var db = new MainDbContext();
 
             if (ModelState.IsValid)
             {
-                list.Name = list.Name;
-                if (list.Public == 1) { list.Public = 1; }
-                else { list.Public = 0; }
-
-                db.Entry(list).State = EntityState.Modified;
+                db.Entry(serial).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(list);
+            return View(serial);
         }
         [HttpGet]
         public ActionResult Delete(int id)
@@ -129,13 +126,47 @@ namespace SeriesApp.Controllers
             }
             return RedirectToAction("Index");
         }
-        //public ActionResult Carousel()
-        //{
-        //    List<Series> imgList = new List<Series>();
-
-        //    imgList.Add(new Series(){ Source = "" });
-
-        //    return PartialView("_Carousel", imgList);
-        //}
+        [HttpPost]
+        public JsonResult AddEpisodes(int id)
+        {
+            var db = new MainDbContext();
+            var result = false;
+            using (db)
+            {
+                for (int i = 1; i <= Convert.ToInt32(Request.Form["episodesNo"]); i++)
+                {
+                    var dbEpisode = db.Episodes.Create();
+                    dbEpisode.No = i;
+                    dbEpisode.Season = Convert.ToInt32(Request.Form["seasonNo"]);
+                    dbEpisode.Title = "Episode " + i;
+                    dbEpisode.Serial = id;
+                    dbEpisode.Seen = 0;
+                    db.Episodes.Add(dbEpisode);
+                    db.SaveChanges();
+                    result = true;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Carousel()
+        {
+            MainDbContext db = new MainDbContext();
+            List<Series> series = new List<Series>();
+            int id = 0;
+            if (!User.Identity.IsAuthenticated)
+            {
+                series = db.Series.Where(s => s.Public == true).ToList();
+            }
+            else
+            {
+                try
+                {
+                    id = Convert.ToInt32(Url.RequestContext.HttpContext.Request.UrlReferrer.Segments[3]);
+                }
+                catch (Exception ex) { }
+                series = id > 0 ? db.Series.Where(s => s.ID == id).ToList() : db.Series.ToList();
+            }
+            return View("~/Views/Home/_Carousel.cshtml", series);
+        }
     }
 }

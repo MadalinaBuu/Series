@@ -16,5 +16,6 @@ namespace SeriesApp
 
         public DbSet<Users> Users { get; set; }
         public DbSet<Series> Series { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
     }
 }

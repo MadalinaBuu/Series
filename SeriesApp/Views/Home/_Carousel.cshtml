@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<SeriesApp.Models.Series>
 @{
     ViewBag.Title = "Index";
+    Layout = "";
 }
 
 <div id="mycarousel" class="carousel slide" data-ride="carousel">
@@ -13,7 +14,8 @@
     <div class="carousel-inner">
         @foreach (var item in Model)
         {
-            <div class="@("carousel-item " + (item.ID == 1 ? "active" : ""))">
+            int idActive = Model.Count() > 1 ? 1 : item.ID;
+            <div class="carousel-item @(item.ID == idActive ? "active" : string.Empty)">
                 <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgCarousel" />
             </div>
         }
