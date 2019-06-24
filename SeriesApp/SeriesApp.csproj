@@ -151,6 +151,7 @@
     <Content Include="Images\dragosteinalbsinegru.png" />
     <Content Include="Images\gossipgirl.png" />
     <Content Include="Images\ziuaincaremisascrisdestinul.jpg" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Views\Home\Images\cat.jpg" />
     <Content Include="Views\Home\Images\dragosteinalbsinegru.png" />
     <Content Include="Views\Home\Images\gossipgirl.png" />

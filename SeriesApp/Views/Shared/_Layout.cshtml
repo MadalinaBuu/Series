@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/script.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,11 +42,7 @@
         </div>
     </nav>
     <div class="container body-content">
-        @if (@User.Identity.IsAuthenticated && Request.Path != "/Auth/Registration" && Request.Path != "/Auth/Login" && !Request.Path.Contains("Edit") && !Request.Path.Contains("Episodes"))
-        {
-            var Carousel = Html.Partial("~/Views/Home/_Carousel.cshtml");
-            @Carousel
-        }
+        <div id="carousel"></div>
         @RenderBody()
     </div>
 
@@ -51,7 +50,5 @@
         <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
     </footer>
 
-    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

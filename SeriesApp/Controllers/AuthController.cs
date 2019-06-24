@@ -16,7 +16,7 @@ namespace SeriesApp.Controllers
         public ActionResult Index()
         {
             var db = new MainDbContext();
-            return View(db.Series.Where(x => x.Public == 1).ToList());
+            return View(db.Series.Where(x => x.Public == true).ToList());
         }
         [HttpGet]
         public ActionResult Login()
