@@ -10,24 +10,66 @@
 
     for (int i = 1; i <= seasons; i++)
     {
-        string collapse, collapseId = String.Empty;
-        collapse = "#collapse" + i;
-        collapseId = "collapse" + i;
-        <div class="panel-group" id="accordion">
+        //string collapse, collapseId = String.Empty;
+        //collapse = "#collapse" + i;
+        //collapseId = "collapse" + i;
+        @*<div class="panel-group" id="accordion">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href=@collapse>
-                            Season @i
+                            <div class="text-center">Season @i</div>
                         </a>
                     </h4>
                 </div>
-                <div id=@collapseId class="panel-collapse collapse in">
+                <div id=@collapseId class="panel-collapse @(i  != seasons ? "collapse in" : "")">
                     <div class="panel-body">
-                        <ul>
+                        <ul class="list-unstyled">
                             @foreach (var ep in episodes.Where(s => s.Season == i))
                             {
-                                <li>@ep.Title</li>
+                                <li class="font-weight-bold">
+                                    @ep.Title
+                                    <button type="button" id="seenEpisode" onclick="seenEpisode(@ep.ID, @collapseId)" class="btnEpisode
+                                            @(ep.Seen == 1 ? "seen" : "unseen")">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <hr />
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>*@
+        @*</div>*@
+        <hr />
+
+        string collapse, collapseId, heading = String.Empty;
+        collapse = "#collapse" + i;
+        collapseId = "collapse" + i;
+        heading = "heading" + i;
+        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+            <div class="panel-group">
+                <div class="panel-group" role="tab" id=@heading>
+                    <a data-toggle="collapse" data-parent="#accordionEx" href=@collapse aria-expanded="true"
+                       aria-controls=@collapseId>
+                        <h5 class="mb-0">
+                            Season @i
+                        </h5>
+                    </a>
+                </div>
+                <div id=@collapseId class="collapse @(i  == seasons ? "show" : "")" role="tabpanel" aria-labelledby=@heading data-parent="#accordionEx">
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            @foreach (var ep in episodes.Where(s => s.Season == i))
+                            {
+                                <li class="font-weight-bold">
+                                    @ep.Title
+                                    <button type="button" id="seenEpisode" onclick="seenEpisode(@ep.ID, @collapseId)" class="btnEpisode
+                                            @(ep.Seen == 1 ? "seen" : "unseen")">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <hr />
+                                </li>
                             }
                         </ul>
                     </div>
@@ -36,3 +78,37 @@
         </div>
     }
 }
+<style>
+    .btnEpisode {
+        padding: 0;
+        border: none;
+        background: none;
+    }
+
+    .unseen {
+        color: grey;
+    }
+
+    .seen {
+        color: green;
+    }
+</style>
+<script>
+    function seenEpisode(id, divCollapsed) {
+        $.ajax({
+            url: '/Home/SeenEpisode',
+            data: { "id": id },
+            type: 'POST',
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: function (result) {
+                if (result) {
+                $('#seenEpisode').removeClass("unseen");
+                $('#seenEpisode').addClass("seen");
+                    $('#divEpisodes').load('/Home/GetEpisode', { id: @Model.ID });
+                }
+            }
+        });
+    }
+</script>

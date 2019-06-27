@@ -155,5 +155,28 @@ namespace SeriesApp.Controllers
             }
             return View("~/Views/Home/_Carousel.cshtml", series);
         }
+        public ActionResult GetEpisode(int? id)
+        {
+            List<Episode> series = db.Episodes.Where(s => s.Serial == id).ToList();
+            return PartialView(series);
+        }
+        [HttpPost]
+        public ActionResult SeenEpisode(int? id)
+        {
+            bool result = false;
+            Episode episode = db.Episodes.Find(id);
+            if (id != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    episode.Seen = 1;
+
+                    db.Entry(episode).State = EntityState.Modified;
+                    db.SaveChanges();
+                    result = true;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

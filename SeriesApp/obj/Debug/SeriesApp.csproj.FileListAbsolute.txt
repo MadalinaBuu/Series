@@ -297,8 +297,6 @@ C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\Microsoft.Web.Infrastruct
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\MySql.Data.dll
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\MySql.Data.EntityFramework.dll
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\Owin.dll
-C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\PagedList.dll
-C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\PagedList.Mvc.dll
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Helpers.dll
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Mvc.dll
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Razor.dll
@@ -316,8 +314,6 @@ C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\Microsoft.Owin.Security.x
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\Microsoft.Owin.Security.Cookies.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\MySql.Data.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\MySql.Data.EntityFramework.xml
-C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\PagedList.xml
-C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\PagedList.Mvc.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Helpers.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Mvc.xml
 C:\Users\Madalina\Desktop\GIT Serial APP\SeriesApp\bin\System.Web.Razor.xml

@@ -5,26 +5,31 @@
 }
 
 <div id="mycarousel" class="carousel slide" data-ride="carousel">
-    <ul class="carousel-indicators">
-        @foreach (var item in Model)
-        {
-            <li data-target="#mycarousel" data-slide-to=@item.ID></li>
-        }
-    </ul>
+    @if (Model.Count() > 1)
+    {
+        <ul class="carousel-indicators">
+            @foreach (var serial in Model)
+            {
+                <li data-target="#mycarousel" data-slide-to=@serial.ID></li>
+            }
+        </ul>
+    }
     <div class="carousel-inner">
-        @foreach (var item in Model)
+        @foreach (var serial in Model)
         {
-            int idActive = Model.Count() > 1 ? 1 : item.ID;
-            <div class="carousel-item @(item.ID == idActive ? "active" : string.Empty)">
-                <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgCarousel" />
+            int idActive = Model.Count() > 1 ? 1 : serial.ID;
+            <div class="carousel-item @(serial.ID == idActive ? "active" : string.Empty)">
+                <img src="~/@serial.Source" alt=@Html.DisplayFor(modelItem => serial.Name) class="imgCarousel" />
             </div>
         }
     </div>
-
-    <a class="carousel-control-prev" href="#mycarousel" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#mycarousel" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </a>
+    @if (Model.Count() > 1)
+    {
+        <a class="carousel-control-prev" href="#mycarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#mycarousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    }
 </div>

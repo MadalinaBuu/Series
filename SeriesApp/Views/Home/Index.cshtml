@@ -3,7 +3,6 @@
     ViewBag.Title = "Index";
     var username = User.Identity.Name;
 }
-
 @using (Html.BeginForm())
 {
     <br />
@@ -28,18 +27,18 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                            <div class="form-group">
-                                <label>Name: </label>
-                                <div class="controls">
-                                    <input type="text" name="name" class="form-control" />
-                                </div>
+                        <div class="form-group">
+                            <label>Name: </label>
+                            <div class="controls">
+                                <input type="text" name="name" class="form-control" />
                             </div>
-                            <div class="form-group">
-                                <label>Source:</label>
-                                <div class="controls">
-                                    <input type="text" name="source" class="form-control" />
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Source:</label>
+                            <div class="controls">
+                                <input type="text" name="source" class="form-control" />
                             </div>
+                        </div>
                         <div class="form-group">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="check_public">
@@ -78,9 +77,9 @@
                                         <div class="card-body" style="text-align: center; display: grid;">
                                             <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;">
                                                 <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
-                                                </a>
-                                                <a class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
-                                                <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-primary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
+                                            </a>
+                                            <a class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
+                                            <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-primary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +124,9 @@
                                             <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                         </a>
                                         <div class="card-body" style="text-align: center; display: grid;">
-                                            <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;">
+                                                <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                            </a>
                                             <a class="pointer-arrow btn btn-primary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
                                         </div>
                                     </div>
@@ -136,12 +137,33 @@
                 </tr>
             </tbody>
         </table>
+        <div class="form-group text-center">
+            <button id="showMore" type="button" class="btn btn-primary">Show more...</button>
+            <button id="showLess" type="button" class="btn btn-primary">Show less...</button>
+        </div>
     </div>
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+    $(document).ready(function () {
+        size_td = $("#SeenSeriesList td").length;
+        $("#SeenSeriesList td").hide();
+        x = 6;
+        $('#SeenSeriesList td:lt(' + x + ')').show();
+
+        $('#showMore').click(function () {
+            x = (x + 3 <= size_td) ? x + 3 : size_td;
+            $('#SeenSeriesList td:lt(' + x + ')').show();
+        });
+        $('#showLess').click(function () {
+            x = (x - 3 < 0) ? 3 : x - 3;
+            $('#SeenSeriesList td').not(':lt(' + x + ')').hide();
+        });
+    });
+
     function search(searchedVal, table) {
         var value = searchedVal.toLowerCase().trim();
+        $("#SeenSeriesList td").show();
         $("#" + table + " .card").filter(function () {
             $(this).toggle($(this).find('.card-title').text().toLowerCase().indexOf(value) > -1)
         });
