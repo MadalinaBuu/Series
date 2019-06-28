@@ -12,7 +12,7 @@
             <div style="align-self: center;font-size: x-large;font-weight: 900;">Unseen series</div>
             <div style="display: inline-flex;">
                 <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew" title="Add new serial" style="min-width: 150px;"><i class="fa fa-plus"></i>Add new</button>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addNew" title="Add new serial" style="min-width: 150px;"><i class="fa fa-plus"></i>Add new</button>
             </div>
         </div>
         <hr />
@@ -47,8 +47,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-secondary">Save</button>
                     </div>
                 </div>
             </div>
@@ -75,11 +75,11 @@
                                             <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                         </a>
                                         <div class="card-body" style="text-align: center; display: grid;">
-                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;">
+                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-secondary" style="margin-bottom: 1px;">
                                                 <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
                                             </a>
-                                            <a class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
-                                            <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-primary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
+                                            <a class="pointer-arrow btn btn-secondary" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
+                                            <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-secondary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
                                         </div>
                                     </div>
                                 </div>
@@ -124,10 +124,10 @@
                                             <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                         </a>
                                         <div class="card-body" style="text-align: center; display: grid;">
-                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-primary" style="margin-bottom: 1px;">
+                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-secondary" style="margin-bottom: 1px;">
                                                 <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
                                             </a>
-                                            <a class="pointer-arrow btn btn-primary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="pointer-arrow btn btn-secondary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
                                         </div>
                                     </div>
                                 </div>
@@ -138,8 +138,8 @@
             </tbody>
         </table>
         <div class="form-group text-center">
-            <button id="showMore" type="button" class="btn btn-primary">Show more...</button>
-            <button id="showLess" type="button" class="btn btn-primary">Show less...</button>
+            <button id="showMore" type="button" class="btn btn-secondary">Show more...</button>
+            <button id="showLess" type="button" class="btn btn-secondary">Show less...</button>
         </div>
     </div>
 }

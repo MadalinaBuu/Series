@@ -10,39 +10,6 @@
 
     for (int i = 1; i <= seasons; i++)
     {
-        //string collapse, collapseId = String.Empty;
-        //collapse = "#collapse" + i;
-        //collapseId = "collapse" + i;
-        @*<div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href=@collapse>
-                            <div class="text-center">Season @i</div>
-                        </a>
-                    </h4>
-                </div>
-                <div id=@collapseId class="panel-collapse @(i  != seasons ? "collapse in" : "")">
-                    <div class="panel-body">
-                        <ul class="list-unstyled">
-                            @foreach (var ep in episodes.Where(s => s.Season == i))
-                            {
-                                <li class="font-weight-bold">
-                                    @ep.Title
-                                    <button type="button" id="seenEpisode" onclick="seenEpisode(@ep.ID, @collapseId)" class="btnEpisode
-                                            @(ep.Seen == 1 ? "seen" : "unseen")">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <hr />
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>*@
-        @*</div>*@
-        <hr />
-
         string collapse, collapseId, heading = String.Empty;
         collapse = "#collapse" + i;
         collapseId = "collapse" + i;
@@ -50,28 +17,28 @@
         <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
             <div class="panel-group">
                 <div class="panel-group" role="tab" id=@heading>
-                    <a data-toggle="collapse" data-parent="#accordionEx" href=@collapse aria-expanded="true"
+                    <a data-toggle="collapse" data-parent="#accordionEx" href=@collapse aria-expanded="true" class="collapseHeader"
                        aria-controls=@collapseId>
-                        <h5 class="mb-0">
-                            Season @i
-                        </h5>
+                        <h3 class="seasonAccordion alert alert-secondary">
+                            <strong>Season @i</strong>
+                            @*<button type="button" id="seenSeason" class="btnEpisode"><i class="fa fa-eye"></i></button>*@
+                        </h3>
                     </a>
                 </div>
                 <div id=@collapseId class="collapse @(i  == seasons ? "show" : "")" role="tabpanel" aria-labelledby=@heading data-parent="#accordionEx">
                     <div class="panel-body">
-                        <ul class="list-unstyled">
+                        <table class="table">
                             @foreach (var ep in episodes.Where(s => s.Season == i))
                             {
-                                <li class="font-weight-bold">
-                                    @ep.Title
-                                    <button type="button" id="seenEpisode" onclick="seenEpisode(@ep.ID, @collapseId)" class="btnEpisode
-                                            @(ep.Seen == 1 ? "seen" : "unseen")">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <hr />
-                                </li>
+                                <tr>
+                                    <td>@ep.Title</td>
+                                    <td>
+                                        <button type="button" id="btnSeenEp" onclick="seenEpisode(@ep.ID, this)" class="btnEpisode @(ep.Seen == 1 ? "seen" : "unseen")">
+                                            <i class="fa fa-eye"></i></button>
+                                    </td>
+                                </tr>
                             }
-                        </ul>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -92,23 +59,36 @@
     .seen {
         color: green;
     }
+
+    .seasonAccordion {
+        color: black;
+    }
+    .panel-group a:hover {
+        outline: none;
+        text-decoration: none;
+    }
 </style>
 <script>
-    function seenEpisode(id, divCollapsed) {
-        $.ajax({
-            url: '/Home/SeenEpisode',
-            data: { "id": id },
-            type: 'POST',
-            error: function (xhr) {
-                alert('Error: ' + xhr.statusText);
-            },
-            success: function (result) {
-                if (result) {
-                $('#seenEpisode').removeClass("unseen");
-                $('#seenEpisode').addClass("seen");
-                    $('#divEpisodes').load('/Home/GetEpisode', { id: @Model.ID });
+    //$('.collapseHeader').click(function () {
+    //    if ($('.accordion').parent('h3').hasClass('show')) {
+    //        alert(active);
+    //    }
+    //});
+        function seenEpisode(id, buttonId) {
+            $.ajax({
+                url: '/Home/SeenEpisode',
+                data: {  "id": id },
+                type: 'POST',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    if (result) {
+                        console.log(buttonId);
+                        $(buttonId).removeClass("unseen").addClass("seen");
+
+                    }
                 }
-            }
-        });
+            });
     }
 </script>

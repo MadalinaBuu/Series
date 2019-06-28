@@ -155,11 +155,11 @@ namespace SeriesApp.Controllers
             }
             return View("~/Views/Home/_Carousel.cshtml", series);
         }
-        public ActionResult GetEpisode(int? id)
-        {
-            List<Episode> series = db.Episodes.Where(s => s.Serial == id).ToList();
-            return PartialView(series);
-        }
+        //public ActionResult GetEpisode(int? id)
+        //{
+        //    List<Episode> series = db.Episodes.Where(s => s.Serial == id).ToList();
+        //    return PartialView("~/Views/Home/_SeasonsAndEpisodes.cshtml", series);
+        //}
         [HttpPost]
         public ActionResult SeenEpisode(int? id)
         {
