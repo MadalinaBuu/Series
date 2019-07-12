@@ -6,13 +6,17 @@
 @using (Html.BeginForm())
 {
     <br />
-    <div class="container overlay">
+    <div class="container-fluid overlay">
         <hr />
-        <div style="display: flex;justify-content: space-between;">
-            <div style="align-self: center;font-size: x-large;font-weight: 900;">Unseen series</div>
-            <div style="display: inline-flex;">
-                <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addNew" title="Add new serial" style="min-width: 150px;"><i class="fa fa-plus"></i>Add new</button>
+        <div class="row" style="margin: 0 auto;max-width: 1056px;">
+            <div class="col-md-8 col-sm-6 col-xs-12" style="font-size: x-large;font-weight: 900;">Unseen series</div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group mb-3">
+                    <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addNew" title="Add new serial"><i class="fa fa-plus"></i>Add</button>
+                    </div>
+                </div>
             </div>
         </div>
         <hr />
@@ -69,7 +73,7 @@
                         if (item.Seen == 0)
                         {
                             <td>
-                                <div class="col-sm-4">
+                                <div class="col-md-3 col-sm-2">
                                     <div class="card">
                                         <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
                                             <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
@@ -94,9 +98,9 @@
     <br />
     <div class="container overlay">
         <hr />
-        <div style="display: flex;justify-content: space-between;">
-            <div style="align-self: center;font-size: x-large;font-weight: 900;">Seen series</div>
-            <div style="display: inline-flex;">
+        <div class="row" style="margin: 0 auto;max-width: 1056px;">
+            <div class="col-md-8 col-sm-6 col-xs-12" style="font-size: x-large;font-weight: 900;">Seen series</div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
                 <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeenSeriesList')">
             </div>
         </div>
