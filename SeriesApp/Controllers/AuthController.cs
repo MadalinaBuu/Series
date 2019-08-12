@@ -14,8 +14,8 @@ namespace SeriesApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var db = new MainDbContext();
-            return View(db.Series.Where(x => x.Public == true).ToList());
+            var db = new SeriesEntities();
+            return View(db.Series.Where(x => x.PublicS == 1).ToList());
         }
         [HttpGet]
         public ActionResult Login()
@@ -23,13 +23,13 @@ namespace SeriesApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(Users model)
+        public ActionResult Login(users model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            using (var db = new MainDbContext())
+            using (var db = new SeriesEntities())
             {
                 var emailCheck = db.Users.FirstOrDefault(u => u.Email == model.Email);
                 var getPassword = db.Users.Where(u => u.Email == model.Email).Select(u => u.Password);
@@ -74,7 +74,7 @@ namespace SeriesApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Registration(Users model)
+        public ActionResult Registration(users model)
         {
             if (string.IsNullOrEmpty(model.Name))
             {
@@ -82,7 +82,7 @@ namespace SeriesApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                using (var db = new MainDbContext())
+                using (var db = new SeriesEntities())
                 {
                     var queryUser = db.Users.FirstOrDefault(u => u.Email == model.Email);
                     if (queryUser == null)

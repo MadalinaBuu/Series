@@ -12,11 +12,13 @@ namespace SeriesApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class users
+    public partial class episodes
     {
         public int ID { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Name { get; set; }
+        public int Serial { get; set; }
+        public int Season { get; set; }
+        public int No { get; set; }
+        public string Title { get; set; }
+        public short Seen { get; set; }
     }
 }

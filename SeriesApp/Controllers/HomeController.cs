@@ -13,25 +13,25 @@ namespace SeriesApp.Controllers
     public class HomeController : Controller
     {
         Claim sessionEmail = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Email);
-        MainDbContext db = new MainDbContext();
+        SeriesEntities db = new SeriesEntities();
 
         public ActionResult Index()
         {
             return View(db.Series.ToList());
         }
         [HttpPost]
-        public ActionResult Index(Series list, string Seen)
+        public ActionResult Index(series list, string Seen)
         {
             if (ModelState.IsValid)
             {
-                List<int> userId = db.Users.Where(u => u.Email == sessionEmail.Value).Select(u => u.Id).ToList();
+                List<int> userId = db.Users.Where(u => u.Email == sessionEmail.Value).Select(u => u.ID).ToList();
                 string name = Request.Form["name"];
 
                 var dbSerial = db.Series.Create();
                 dbSerial.User_ID = userId[0];
                 dbSerial.Name = name;
 
-                dbSerial.Public = Convert.ToBoolean(Request.Form["Public"]) == true;
+                dbSerial.PublicS = Convert.ToInt32(Request.Form["Public"]);
                 dbSerial.Seen = 0;
 
                 string source = "Images/" + Utile.RemoveSpecialCharacters(name + Path.GetExtension(Request.Form["source"])).ToLower();
@@ -72,12 +72,12 @@ namespace SeriesApp.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            Series serial = new Series();
+            series serial = new series();
             serial = db.Series.Find(id);
             return View(serial);
         }
         [HttpPost]
-        public ActionResult Edit(Series serial)
+        public ActionResult Edit(series serial)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace SeriesApp.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            Series serial = db.Series.Find(id);
+            series serial = db.Series.Find(id);
             if (serial == null)
                 return HttpNotFound();
 
@@ -100,7 +100,7 @@ namespace SeriesApp.Controllers
         }
         public ActionResult Seen(int? id)
         {
-            Series serial = db.Series.Find(id);
+            series serial = db.Series.Find(id);
             if (id != null)
             {
                 if (ModelState.IsValid)
@@ -117,30 +117,27 @@ namespace SeriesApp.Controllers
         public JsonResult AddEpisodes(int id)
         {
             bool result = false;
-            using (db)
+            for (int i = 1; i <= Convert.ToInt32(Request.Form["episodesNo"]); i++)
             {
-                for (int i = 1; i <= Convert.ToInt32(Request.Form["episodesNo"]); i++)
-                {
-                    var dbEpisode = db.Episodes.Create();
-                    dbEpisode.No = i;
-                    dbEpisode.Season = Convert.ToInt32(Request.Form["seasonNo"]);
-                    dbEpisode.Title = "Episode " + i;
-                    dbEpisode.Serial = id;
-                    dbEpisode.Seen = 0;
-                    db.Episodes.Add(dbEpisode);
-                    db.SaveChanges();
-                    result = true;
-                }
+                var dbEpisode = db.Episodes.Create();
+                dbEpisode.No = i;
+                dbEpisode.Season = Convert.ToInt32(Request.Form["seasonNo"]);
+                dbEpisode.Title = "Episode " + i;
+                dbEpisode.Serial = id;
+                dbEpisode.Seen = 0;
+                db.Episodes.Add(dbEpisode);
+                db.SaveChanges();
+                result = true;
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Carousel()
         {
-            List<Series> series = new List<Series>();
+            List<series> series = new List<series>();
             int id = 0;
             if (!User.Identity.IsAuthenticated)
             {
-                series = db.Series.Where(s => s.Public == true).ToList();
+                series = db.Series.Where(s => s.PublicS == 1).ToList();
             }
             else
             {
@@ -162,7 +159,7 @@ namespace SeriesApp.Controllers
         public ActionResult SeenEpisode(int? id)
         {
             bool result = false;
-            Episode episode = db.Episodes.Find(id);
+            episodes episode = db.Episodes.Find(id);
             if (id != null)
             {
                 if (ModelState.IsValid)

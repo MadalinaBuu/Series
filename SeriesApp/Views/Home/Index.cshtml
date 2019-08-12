@@ -1,8 +1,45 @@
-﻿@model IEnumerable<SeriesApp.Models.Series>
+﻿@model IEnumerable<SeriesApp.Models.series>
 @{
     ViewBag.Title = "Index";
     var username = User.Identity.Name;
 }
+
+@*<style>
+    .rotating-slider ul.slides li {
+        color: #fff
+    }
+
+        .rotating-slider ul.slides li:nth-of-type(1) {
+            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
+        }
+
+        .rotating-slider ul.slides li:nth-of-type(2) {
+            background: url('http://static.pexels.com/wp-content/uploads/2014/05/car-oldtimer-snow-342-825x550.jpg');
+        }
+
+        .rotating-slider ul.slides li:nth-of-type(3) {
+            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
+        }
+
+        .rotating-slider ul.slides li:nth-of-type(4) {
+            background: url('http://static.pexels.com/wp-content/uploads/2014/06/analog-camera-old-olympus-om-10-1528-825x550.jpg');
+        }
+
+        .rotating-slider ul.slides li:nth-of-type(5) {
+            background: url('http://static.pexels.com/wp-content/uploads/2014/05/car-oldtimer-snow-342-825x550.jpg');
+        }
+
+        .rotating-slider ul.slides li:nth-of-type(6) {
+            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
+        }
+
+        .rotating-slider ul.slides li .inner {
+            box-sizing: border-box;
+            padding: 2em;
+            height: 100%;
+            width: 100%;
+        }
+</style>*@
 @using (Html.BeginForm())
 {
     <section class="padding-top-5">
@@ -40,7 +77,7 @@
                                                 <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                                 <div class="overlay-title">
                                                     <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
-                                                        <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                                        <label id="lblName" class="card-title pointer-arrow">@item.Name.ToString().Replace("_", " ")</label>
                                                     </a>
                                                     <div style="text-align: center; display: grid;">
                                                         <div class="overlay-button">
@@ -100,6 +137,45 @@
         </div>
     </div>
 
+    @*<section>
+        <div  class="container full">
+            <div class="rotating-slider">
+                <ul class="slides">
+                    <li>
+                        <div class="inner">
+                            <h2>jQuery Rotating Slider</h2>
+                            <p>A fancy rotator plugin.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inner"></div>
+                    </li>
+                    <li>
+                        <div class="inner">
+                            <h2>Slide 2</h2>
+                            <p>This is slide 2</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inner"> </div>
+                    </li>
+                    <li>
+                        <div class="inner">
+                            <h2>Slide 3</h2>
+                            <p>This is slide 3</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inner">
+                            <h2>Slide 4</h2>
+                            <p>This is slide 4</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>*@
+
     <section class="padding-top-5">
         <div class="container overlay">
             <div class="row title-search">
@@ -136,7 +212,7 @@
                                                 <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                                 <div class="overlay-title">
                                                     <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
-                                                        <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                                        <label id="lblName" class="card-title pointer-arrow">@item.Name.ToString().Replace("_", " ")</label>
                                                     </a>
                                                     <div style="text-align: center; display: grid;">
                                                         <div class="overlay-button">
@@ -164,6 +240,7 @@
     </section>
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@*<script src="~/Scripts/jquery.rotating-slider.js"></script>*@
 <script>
     $(document).ready(function () {
         size_td = $("#SeenSeriesList td").length;
@@ -179,6 +256,10 @@
             x = (x - 3 < 0) ? 3 : x - 3;
             $('#SeenSeriesList td').not(':lt(' + x + ')').hide();
         });
+        //$('.rotating-slider').rotatingSlider({
+        //    slideHeight: Math.min(360, window.innerWidth - 80),
+        //    slideWidth: Math.min(480, window.innerWidth - 80),
+        //});
     });
 
     function search(searchedVal, table) {

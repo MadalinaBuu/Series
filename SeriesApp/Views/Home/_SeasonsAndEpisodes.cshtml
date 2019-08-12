@@ -1,10 +1,11 @@
-﻿@model SeriesApp.Models.Series
+﻿@model SeriesApp.Models.series
 @{
     ViewBag.Title = "Episode";
 }
+@using SeriesApp.Models;
 
 @{
-    MainDbContext db = new MainDbContext();
+    SeriesEntities db = new SeriesEntities();
     var episodes = db.Episodes.Where(s => s.Serial == Model.ID).ToList();
     var seasons = episodes.GroupBy(s => s.Season).Count();
 
@@ -34,7 +35,8 @@
                                     <td>@ep.Title</td>
                                     <td>
                                         <button type="button" id="btnSeenEp" onclick="seenEpisode(@ep.ID, this)" class="btnEpisode @(ep.Seen == 1 ? "seen" : "unseen")">
-                                            <i class="fa fa-eye"></i></button>
+                                            <i class="fa fa-eye"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -63,6 +65,7 @@
     .seasonAccordion {
         color: black;
     }
+
     .panel-group a:hover {
         outline: none;
         text-decoration: none;
@@ -74,21 +77,21 @@
     //        alert(active);
     //    }
     //});
-        function seenEpisode(id, buttonId) {
-            $.ajax({
-                url: '/Home/SeenEpisode',
-                data: {  "id": id },
-                type: 'POST',
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    if (result) {
-                        console.log(buttonId);
-                        $(buttonId).removeClass("unseen").addClass("seen");
+    function seenEpisode(id, buttonId) {
+        $.ajax({
+            url: '/Home/SeenEpisode',
+            data: { "id": id },
+            type: 'POST',
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: function (result) {
+                if (result) {
+                    console.log(buttonId);
+                    $(buttonId).removeClass("unseen").addClass("seen");
 
-                    }
                 }
-            });
+            }
+        });
     }
 </script>
