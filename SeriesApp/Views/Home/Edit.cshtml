@@ -43,8 +43,8 @@
                 </div>
                 <br>
                 <div class="form-group float-right">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSeason" title="Add details"><i class="fa fa-plus"></i>Add new</button>
+                    <input type="submit" value="Save" class="btn btn-secondary" />
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addSeason" title="Add details"><i class="fa fa-plus"></i>Add new</button>
                 </div>
             </div>
         </div>
@@ -83,8 +83,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="addSeason" class="btn btn-primary" onclick="AddEpisodes(@Model.ID)">Add details</button>  
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button id="addSeason" class="btn btn-secondary" onclick="AddEpisodes(@Model.ID)">Add details</button>  
                 </div>
             </div>
         </div>
@@ -92,7 +92,8 @@
 
 <br />
 <div id="divEpisodes" class="container overlay">
-    @Html.Partial("Episode", Model)
+    <br/>
+    @Html.Partial("_SeasonsAndEpisodes", Model)
 </div>
 
 <script>
