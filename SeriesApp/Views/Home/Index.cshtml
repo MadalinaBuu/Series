@@ -5,147 +5,163 @@
 }
 @using (Html.BeginForm())
 {
-    <br />
-    <div class="container-fluid overlay">
-        <hr />
-        <div class="row" style="margin: 0 auto;max-width: 1056px;">
-            <div class="col-md-8 col-sm-6 col-xs-12" style="font-size: x-large;font-weight: 900;">Unseen series</div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="input-group mb-3">
-                    <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addNew" title="Add new serial"><i class="fa fa-plus"></i>Add</button>
+    <section class="padding-top-5">
+        <div class="container overlay">
+            <div class="row title-search">
+                <div class="col col-lg-8 section-title">Unseen series</div>
+                <div class="col col-lg-4">
+                    <div class="input-group mb-3">
+                        <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew" title="Add new serial"><i class="fa fa-plus"></i>Add</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <hr />
+            <table id="SeriesList" class="flex-center">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="card-group" style="justify-content: space-around;">
+                        @foreach (var item in Model)
+                        {
+                            if (item.Seen == 0)
+                            {
+                                <td>
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-element">
+                                                <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
+                                                <div class="overlay-title">
+                                                    <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
+                                                        <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                                    </a>
+                                                    <div style="text-align: center; display: grid;">
+                                                        <div class="overlay-button">
+                                                            <a class="button card-button pointer-arrow" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash green-icon"></i> Delete</a>
+                                                        </div>
+                                                        <div class="overlay-button">
+                                                            <a name="Seen" value="@item.ID" class="button card-button pointer-arrow" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye red-icon"></i> Seen</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            }
+                        }
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <hr />
+    </section>
 
-        <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewSerial" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addNewSerial">Add new serial</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name: </label>
-                            <div class="controls">
-                                <input type="text" name="name" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Source:</label>
-                            <div class="controls">
-                                <input type="text" name="source" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="check_public">
-                                <label class="form-check-label" for="exampleCheck1">Public</label>
-                            </div>
+    <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewSerial" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewSerial">Add new serial</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name: </label>
+                        <div class="controls">
+                            <input type="text" name="name" class="form-control" />
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-secondary">Save</button>
+                    <div class="form-group">
+                        <label>Source:</label>
+                        <div class="controls">
+                            <input type="text" name="source" class="form-control" />
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="check_public">
+                            <label class="form-check-label" for="exampleCheck1">Public</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-
-        <table id="SeriesList">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="card-group">
-                    @foreach (var item in Model)
-                    {
-                        if (item.Seen == 0)
-                        {
-                            <td>
-                                <div class="col-md-3 col-sm-2">
-                                    <div class="card">
-                                        <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
-                                            <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
-                                        </a>
-                                        <div class="card-body" style="text-align: center; display: grid;">
-                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-secondary" style="margin-bottom: 1px;">
-                                                <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
-                                            </a>
-                                            <a class="pointer-arrow btn btn-secondary" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
-                                            <button type="button" name="Seen" value="@item.ID" class="pointer-arrow btn btn-secondary" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye"></i> Seen</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        }
-                    }
-                </tr>
-            </tbody>
-        </table>
     </div>
 
-    <br />
-    <div class="container overlay">
-        <hr />
-        <div class="row" style="margin: 0 auto;max-width: 1056px;">
-            <div class="col-md-8 col-sm-6 col-xs-12" style="font-size: x-large;font-weight: 900;">Seen series</div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeenSeriesList')">
+    <section class="padding-top-5">
+        <div class="container overlay">
+            <div class="row title-search">
+                <div class="col col-lg-8 section-title">Seen series</div>
+                <div class="col col-lg-4">
+                    <div class="input-group mb-3">
+                        <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeenSeriesList')">
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <hr />
+
+            <table id="SeenSeriesList" class="flex-center">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="card-group" style="justify-content: space-around;">
+                        @foreach (var item in Model)
+                        {
+                            if (item.Seen == 1)
+                            {
+                                <td>
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-element">
+                                                <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
+                                                <div class="overlay-title">
+                                                    <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
+                                                        <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
+                                                    </a>
+                                                    <div style="text-align: center; display: grid;">
+                                                        <div class="overlay-button">
+                                                            <a class="button card-button pointer-arrow" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash green-icon"></i> Delete</a>
+                                                        </div>
+                                                        <div class="overlay-button">
+                                                            <a name="Seen" value="@item.ID" class="button card-button pointer-arrow" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye red-icon"></i> Seen</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            }
+                        }
+                    </tr>
+                </tbody>
+            </table>
+            <div class="form-group text-center">
+                <button id="showMore" type="button" class="btn btn-primary">Show more...</button>
+                <button id="showLess" type="button" class="btn btn-primary">Show less...</button>
             </div>
         </div>
-        <br />
-        <hr />
-
-        <table id="SeenSeriesList">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="card-group">
-                    @foreach (var item in Model)
-                    {
-                        if (item.Seen == 1)
-                        {
-                            <td>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
-                                            <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
-                                        </a>
-                                        <div class="card-body" style="text-align: center; display: grid;">
-                                            <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)" class="pointer-arrow btn btn-secondary" style="margin-bottom: 1px;">
-                                                <label id="lblName" class="card-title">@item.Name.ToString().Replace("_", " ")</label>
-                                            </a>
-                                            <a class="pointer-arrow btn btn-secondary" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        }
-                    }
-                </tr>
-            </tbody>
-        </table>
-        <div class="form-group text-center">
-            <button id="showMore" type="button" class="btn btn-secondary">Show more...</button>
-            <button id="showLess" type="button" class="btn btn-secondary">Show less...</button>
-        </div>
-    </div>
+    </section>
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
@@ -167,7 +183,8 @@
 
     function search(searchedVal, table) {
         var value = searchedVal.toLowerCase().trim();
-        $("#SeenSeriesList td").show();
+        var tableString = "#" + table + " td";
+        $(tableString).show();
         $("#" + table + " .card").filter(function () {
             $(this).toggle($(this).find('.card-title').text().toLowerCase().indexOf(value) > -1)
         });

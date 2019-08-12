@@ -24,28 +24,26 @@ namespace SeriesApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (db)
+                List<int> userId = db.Users.Where(u => u.Email == sessionEmail.Value).Select(u => u.Id).ToList();
+                string name = Request.Form["name"];
+
+                var dbSerial = db.Series.Create();
+                dbSerial.User_ID = userId[0];
+                dbSerial.Name = name;
+
+                dbSerial.Public = Convert.ToBoolean(Request.Form["Public"]) == true;
+                dbSerial.Seen = 0;
+
+                string source = "Images/" + Utile.RemoveSpecialCharacters(name + Path.GetExtension(Request.Form["source"])).ToLower();
+                dbSerial.Source = source;
+
+                bool serialAlreadyExists = db.Series.Any(s => s.Source == source && s.Name == name);
+
+                if (!string.IsNullOrEmpty(name) && !serialAlreadyExists)
                 {
-                    List<int> userId = db.Users.Where(u => u.Email == sessionEmail.Value).Select(u => u.Id).ToList();
-                    string name = Request.Form["name"];
-
-                    var dbSerial = db.Series.Create();
-                    dbSerial.User_ID = userId[0];
-                    dbSerial.Name = name;
-
-                    dbSerial.Public = Convert.ToBoolean(Request.Form["Public"]) == true;
-
-                    string source = "Images/" + Utile.RemoveSpecialCharacters(name + Path.GetExtension(Request.Form["source"])).ToLower();
-                    dbSerial.Source = source;
-
-                    bool serialAlreadyExists = db.Series.Any(s => s.Source == source && s.Name == name);
-
-                    if (!string.IsNullOrEmpty(name) && !serialAlreadyExists)
-                    {
-                        SaveImage(Request.Form["source"], name);
-                        db.Series.Add(dbSerial);
-                        db.SaveChanges();
-                    }
+                    SaveImage(Request.Form["source"], name);
+                    db.Series.Add(dbSerial);
+                    db.SaveChanges();
                 }
             }
             else
