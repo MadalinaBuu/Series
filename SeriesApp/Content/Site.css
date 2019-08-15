@@ -36,6 +36,21 @@ footer {
     width: 100%;
     height: 600px;
 }
+.imgLS{
+    width:100%;
+    height:400px;
+}
+.on-top {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
 .overlay {
     width: 100%;
     height: 100%;
@@ -125,6 +140,41 @@ footer {
     padding-right: 25px;
     padding-left: 25px;
 }*/
+.lSPager{
+    display:none;
+}
+.btn-primary {
+    background-color: #28292be0;
+    border-color: #47494ce0;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #28292bfa;
+    border-color: #47494ce0;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #28292be0;
+    border-color: #47494ce0;
+    box-shadow:none;
+}
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn.focus:active,
+.btn:active:focus,
+.btn:focus {
+    outline: 0 !important;
+    outline-offset: 0 !important;
+    background-image: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.form-control:focus {
+    border: 1px solid #ced4da;
+    box-shadow: none;
+}
 @media (min-width: 1200px) {
     .full {
         max-width: 1920px;

@@ -142,6 +142,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\lightslider.css" />
     <Content Include="Content\rotating-slider.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
@@ -160,6 +161,7 @@
       <LastGenOutput>SeriesModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\jquery.rotating-slider.js" />
+    <Content Include="Scripts\lightslider.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
