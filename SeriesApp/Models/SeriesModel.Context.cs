@@ -25,8 +25,8 @@ namespace SeriesApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<episodes> Episodes { get; set; }
-        public virtual DbSet<series> Series { get; set; }
-        public virtual DbSet<users> Users { get; set; }
+        public virtual DbSet<Episodes> Episodes { get; set; }
+        public virtual DbSet<Series> Series { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

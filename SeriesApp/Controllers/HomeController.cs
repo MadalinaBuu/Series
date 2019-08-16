@@ -20,7 +20,7 @@ namespace SeriesApp.Controllers
             return View(db.Series.ToList());
         }
         [HttpPost]
-        public ActionResult Index(series list, string Seen)
+        public ActionResult Index(Series list, string Seen)
         {
             if (ModelState.IsValid)
             {
@@ -72,12 +72,12 @@ namespace SeriesApp.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            series serial = new series();
+            Series serial = new Series();
             serial = db.Series.Find(id);
             return View(serial);
         }
         [HttpPost]
-        public ActionResult Edit(series serial)
+        public ActionResult Edit(Series serial)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace SeriesApp.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            series serial = db.Series.Find(id);
+            Series serial = db.Series.Find(id);
             if (serial == null)
                 return HttpNotFound();
 
@@ -100,7 +100,7 @@ namespace SeriesApp.Controllers
         }
         public ActionResult Seen(int? id)
         {
-            series serial = db.Series.Find(id);
+            Series serial = db.Series.Find(id);
             if (id != null)
             {
                 if (ModelState.IsValid)
@@ -133,7 +133,7 @@ namespace SeriesApp.Controllers
         }
         public ActionResult Carousel()
         {
-            List<series> series = new List<series>();
+            List<Series> series = new List<Series>();
             int id = 0;
             if (!User.Identity.IsAuthenticated)
             {
@@ -159,7 +159,7 @@ namespace SeriesApp.Controllers
         public ActionResult SeenEpisode(int? id)
         {
             bool result = false;
-            episodes episode = db.Episodes.Find(id);
+            Episodes episode = db.Episodes.Find(id);
             if (id != null)
             {
                 if (ModelState.IsValid)

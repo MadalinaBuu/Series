@@ -1,4 +1,4 @@
-﻿@model SeriesApp.Models.series
+﻿@model SeriesApp.Models.Series
 @{
     ViewBag.Title = "Edit";
     var username = User.Identity.Name;
@@ -7,7 +7,6 @@
 @using SeriesApp.Models;
 
 <div class="container overlay">
-    @*<a href="@Url.Action("Index", "Home")">Click here to go back</a>*@
     @using (Html.BeginForm())
     {
         <br />
@@ -84,8 +83,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button id="addSeason" class="btn btn-secondary" onclick="AddEpisodes(@Model.ID)">Add details</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -97,22 +96,4 @@
     @Html.Partial("_SeasonsAndEpisodes", Model)
 </div>
 
-<script>
-    function AddEpisodes(id) {
-        var SeasonNo = document.getElementById("SeasonNo").value;
-        var EpisodesNo = document.getElementById("EpisodesNo").value;
-    $.ajax({
-        url: '@Url.Content("~/Home/AddEpisodes/")',
-        type: 'POST',
-        dataType: 'text',
-        data: { 'id': id, 'SeasonNo': SeasonNo, 'EpisodesNo': EpisodesNo },
-        success: function (result) {
-            console.log("in");
-            if (result) {
-                $("#divEpisodes").load(location.href + " #divEpisodes");
-                $('#addSeason').modal('hide');
-            }
-        }
-    });
-}
-</script>
+<script type="text/javascript" src="~/Scripts/script.js"></script>

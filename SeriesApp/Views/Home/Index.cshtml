@@ -1,45 +1,8 @@
-﻿@model IEnumerable<SeriesApp.Models.series>
+﻿@model IEnumerable<SeriesApp.Models.Series>
 @{
     ViewBag.Title = "Index";
     var username = User.Identity.Name;
 }
-
-@*<style>
-    .rotating-slider ul.slides li {
-        color: #fff
-    }
-
-        .rotating-slider ul.slides li:nth-of-type(1) {
-            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
-        }
-
-        .rotating-slider ul.slides li:nth-of-type(2) {
-            background: url('http://static.pexels.com/wp-content/uploads/2014/05/car-oldtimer-snow-342-825x550.jpg');
-        }
-
-        .rotating-slider ul.slides li:nth-of-type(3) {
-            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
-        }
-
-        .rotating-slider ul.slides li:nth-of-type(4) {
-            background: url('http://static.pexels.com/wp-content/uploads/2014/06/analog-camera-old-olympus-om-10-1528-825x550.jpg');
-        }
-
-        .rotating-slider ul.slides li:nth-of-type(5) {
-            background: url('http://static.pexels.com/wp-content/uploads/2014/05/car-oldtimer-snow-342-825x550.jpg');
-        }
-
-        .rotating-slider ul.slides li:nth-of-type(6) {
-            background: url(http://static.pexels.com/wp-content/uploads/2014/06/bridge-city-night-645-827x550.jpg);
-        }
-
-        .rotating-slider ul.slides li .inner {
-            box-sizing: border-box;
-            padding: 2em;
-            height: 100%;
-            width: 100%;
-        }
-</style>*@
 @using (Html.BeginForm())
 {
     <section class="padding-top-5">
@@ -48,10 +11,10 @@
                 <div class="col col-lg-8 section-title">Unseen series</div>
                 <div class="col col-lg-4">
                     <div class="input-group mb-3">
-                        <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeriesList')">
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew" title="Add new serial"><i class="fa fa-plus"></i>Add</button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-search bigicon"></i></span>
                         </div>
+                        <input id="txtSearch" placeholder="Search..." class="form-control" onkeyup="search(this.value, 'SeriesList')">
                     </div>
                 </div>
             </div>
@@ -77,14 +40,14 @@
                                                 <img src="~/@item.Source" alt=@Html.DisplayFor(modelItem => item.Name) class="imgSeries" />
                                                 <div class="overlay-title">
                                                     <a href="@Url.Action("Edit", "Home")/@Html.DisplayFor(modelItem => item.ID)">
-                                                        <label id="lblName" class="card-title pointer-arrow">@item.Name.ToString().Replace("_", " ")</label>
+                                                        <i class="fa fa-film" style="color:white;"></i> <label id="lblName" class="card-title pointer-arrow">@item.Name.ToString().Replace("_", " ")</label>
                                                     </a>
                                                     <div style="text-align: center; display: grid;">
                                                         <div class="overlay-button">
-                                                            <a class="button card-button pointer-arrow" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash green-icon"></i> Delete</a>
+                                                            <a name="Seen" value="@item.ID" class="button card-button pointer-arrow" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye red-icon"></i> Seen</a>
                                                         </div>
                                                         <div class="overlay-button">
-                                                            <a name="Seen" value="@item.ID" class="button card-button pointer-arrow" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye red-icon"></i> Seen</a>
+                                                            <a class="button card-button pointer-arrow" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash green-icon"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -137,44 +100,19 @@
         </div>
     </div>
 
-    @*<section>
-        <div  class="container full">
-            <div class="rotating-slider">
-                <ul class="slides">
+    <section class="padding-top-5">
+        <div style="position: relative;">
+            <ul id="lightSlider">
+                @foreach (var serial in Model)
+                {
                     <li>
-                        <div class="inner">
-                            <h2>jQuery Rotating Slider</h2>
-                            <p>A fancy rotator plugin.</p>
-                        </div>
+                        <img src="~/@serial.Source" alt=@Html.DisplayFor(modelItem => serial.Name) class="imgLS" />
                     </li>
-                    <li>
-                        <div class="inner"></div>
-                    </li>
-                    <li>
-                        <div class="inner">
-                            <h2>Slide 2</h2>
-                            <p>This is slide 2</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inner"> </div>
-                    </li>
-                    <li>
-                        <div class="inner">
-                            <h2>Slide 3</h2>
-                            <p>This is slide 3</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inner">
-                            <h2>Slide 4</h2>
-                            <p>This is slide 4</p>
-                        </div>
-                    </li>
-                </ul>
+                }
+            </ul>
+            <button type="button" class="btn btn-primary on-top" data-toggle="modal" data-target="#addNew" title="Add new serial"><i class="fa fa-plus"></i> Add New</button>
             </div>
-        </div>
-    </section>*@
+    </section>
 
     <section class="padding-top-5">
         <div class="container overlay">
@@ -182,7 +120,10 @@
                 <div class="col col-lg-8 section-title">Seen series</div>
                 <div class="col col-lg-4">
                     <div class="input-group mb-3">
-                        <input id="txtSearch" class="form-control" placeholder="Search..." onkeyup="search(this.value, 'SeenSeriesList')">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-search bigicon"></i></span>
+                        </div>
+                        <input id="txtSearch" placeholder="Search..." class="form-control" onkeyup="search(this.value, 'SeenSeriesList')">
                     </div>
                 </div>
             </div>
@@ -216,10 +157,10 @@
                                                     </a>
                                                     <div style="text-align: center; display: grid;">
                                                         <div class="overlay-button">
-                                                            <a class="button card-button pointer-arrow" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash green-icon"></i> Delete</a>
+                                                            <a name="Seen" value="@item.ID" class="button card-button pointer-arrow" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye red-icon"></i> Seen</a>
                                                         </div>
                                                         <div class="overlay-button">
-                                                            <a name="Seen" value="@item.ID" class="button card-button pointer-arrow" onclick="document.location.href='@Url.Action("Seen", "Home")/@Html.DisplayFor(modelItem => item.ID)'"><i class="fa fa-eye red-icon"></i> Seen</a>
+                                                            <a class="button card-button pointer-arrow" style="margin-bottom: 1px;" onclick="deleteRow(@Html.DisplayFor(modelItem => item.ID))"><i class="fa fa-trash green-icon"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,7 +181,7 @@
     </section>
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-@*<script src="~/Scripts/jquery.rotating-slider.js"></script>*@
+<script src="~/Scripts/lightslider.js"></script>
 <script>
     $(document).ready(function () {
         size_td = $("#SeenSeriesList td").length;
@@ -256,10 +197,30 @@
             x = (x - 3 < 0) ? 3 : x - 3;
             $('#SeenSeriesList td').not(':lt(' + x + ')').hide();
         });
-        //$('.rotating-slider').rotatingSlider({
-        //    slideHeight: Math.min(360, window.innerWidth - 80),
-        //    slideWidth: Math.min(480, window.innerWidth - 80),
-        //});
+        $("#lightSlider").lightSlider({
+            item: 3,
+            slideMargin: 0,
+            speed: 400,
+            auto: true,
+            pauseOnHover: true,
+            loop: true,
+            pause: 2000,
+
+            responsive: [
+                {
+                    breakpoint: 1070,
+                    settings: {
+                        item: 2,
+                        slideMove: 1,
+                    }
+                },
+                {
+                    breakpoint: 800,
+                    settings: {
+                        item: 1,
+                    }
+                }],
+        });
     });
 
     function search(searchedVal, table) {

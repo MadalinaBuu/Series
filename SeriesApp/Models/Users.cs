@@ -12,7 +12,7 @@ namespace SeriesApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class users
+    public partial class Users
     {
         public int ID { get; set; }
         public string Email { get; set; }
