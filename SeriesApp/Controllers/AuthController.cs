@@ -23,7 +23,7 @@ namespace SeriesApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(users model)
+        public ActionResult Login(Users model)
         {
             if (!ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace SeriesApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Registration(users model)
+        public ActionResult Registration(Users model)
         {
             if (string.IsNullOrEmpty(model.Name))
             {
