@@ -66,27 +66,41 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="episodes">
+        <EntityType Name="Episodes">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Serial" Type="int" Nullable="false" />
           <Property Name="Season" Type="int" Nullable="false" />
           <Property Name="No" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="Seen" Type="smallint" Nullable="false" />
         </EntityType>
-        <EntityType Name="series">
+        <EntityType Name="Series">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="Source" Type="varchar" MaxLength="45" />
           <Property Name="PublicS" Type="int" Nullable="false" />
           <Property Name="Seen" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Series.dbo.test' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="test">
+          <Property Name="ts" Type="nchar" MaxLength="10" />
+        </EntityType>-->
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -151,8 +165,9 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="episodes" EntityType="Self.episodes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="series" EntityType="Self.series" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Episodes" EntityType="Self.Episodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Series" EntityType="Self.Series" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -180,8 +195,9 @@
           <EntitySet Name="AspNetUserClaims" EntityType="SeriesModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="SeriesModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="SeriesModel.AspNetUser" />
-          <EntitySet Name="episodes" EntityType="SeriesModel.episode" />
-          <EntitySet Name="series" EntityType="SeriesModel.series" />
+          <EntitySet Name="Episodes" EntityType="SeriesModel.Episode" />
+          <EntitySet Name="Series" EntityType="SeriesModel.Series" />
+          <EntitySet Name="Users" EntityType="SeriesModel.User" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="SeriesModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -254,27 +270,36 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="SeriesModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="AspNetRoles" Relationship="SeriesModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
-        <EntityType Name="episode">
+        <EntityType Name="Episode">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Serial" Type="Int32" Nullable="false" />
           <Property Name="Season" Type="Int32" Nullable="false" />
           <Property Name="No" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="Seen" Type="Int16" Nullable="false" />
         </EntityType>
-        <EntityType Name="series">
+        <EntityType Name="Series">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="Source" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="PublicS" Type="Int32" Nullable="false" />
           <Property Name="Seen" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="SeriesModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -369,9 +394,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="episodes">
-            <EntityTypeMapping TypeName="SeriesModel.episode">
-              <MappingFragment StoreEntitySet="episodes">
+          <EntitySetMapping Name="Episodes">
+            <EntityTypeMapping TypeName="SeriesModel.Episode">
+              <MappingFragment StoreEntitySet="Episodes">
                 <ScalarProperty Name="Seen" ColumnName="Seen" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="No" ColumnName="No" />
@@ -381,14 +406,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="series">
-            <EntityTypeMapping TypeName="SeriesModel.series">
-              <MappingFragment StoreEntitySet="series">
+          <EntitySetMapping Name="Series">
+            <EntityTypeMapping TypeName="SeriesModel.Series">
+              <MappingFragment StoreEntitySet="Series">
                 <ScalarProperty Name="Seen" ColumnName="Seen" />
                 <ScalarProperty Name="PublicS" ColumnName="PublicS" />
                 <ScalarProperty Name="Source" ColumnName="Source" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SeriesModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

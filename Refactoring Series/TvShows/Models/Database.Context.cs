@@ -30,7 +30,8 @@ namespace TvShows.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<episode> episodes { get; set; }
-        public virtual DbSet<series> series { get; set; }
+        public virtual DbSet<Episode> Episodes { get; set; }
+        public virtual DbSet<Series> Series { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -27,5 +27,6 @@ namespace TvShows.Models
         {
             return new ApplicationDbContext();
         }
+
     }
 }

@@ -12,7 +12,7 @@ namespace TvShows.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class episode
+    public partial class Episode
     {
         public int ID { get; set; }
         public int Serial { get; set; }
