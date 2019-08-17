@@ -98,13 +98,14 @@ footer {
     position: absolute;
     bottom: 0;
     background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
     color: #f1f1f1;
     width: 100%;
     transition: .5s ease;
     opacity: 0;
     color: white;
     font-size: 20px;
+    /*padding: 20px;*/
     text-align: center;
 }
 .imgSeries {
@@ -126,7 +127,8 @@ footer {
 }
 .overlay-button:hover {
     background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    /*color: #fff;*/
 }
 .green-icon {
     color: #2ed7307d;
@@ -134,6 +136,10 @@ footer {
 .red-icon {
     color: #ff00008a;
 }
+/*.col-25 {
+    padding-right: 25px;
+    padding-left: 25px;
+}*/
 .lSPager{
     display:none;
 }
@@ -172,6 +178,7 @@ footer {
 .bg-dark {
     background-color: #040404d6 !important;
 }
+
 .seasonAccordion {
     border-radius: 21px 84px 87px 22px;
     -moz-border-radius: 21px 84px 87px 22px;
@@ -183,6 +190,7 @@ footer {
     -moz-box-shadow: 10px 10px 35px -5px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 35px -5px rgba(179, 179, 178, 0.65);
 }
+
 .btnEpisode {
     padding: 0;
     border: none;

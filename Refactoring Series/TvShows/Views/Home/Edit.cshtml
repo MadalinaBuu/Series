@@ -1,0 +1,99 @@
+﻿@model TvShows.Models.Series
+@{
+    ViewBag.Title = "Edit";
+    var username = User.Identity.Name;
+}
+@using System.Data;
+@using TvShows.Models;
+
+<div class="container overlay">
+    @using (Html.BeginForm())
+    {
+        <br />
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                Serial details
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                </div>
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.User_ID)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Source)
+                </div>
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Seen)
+                </div>
+                @*<div class="form-check">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.CheckBoxFor(model => model.PublicS, new { @class = "form-check-input" })
+                        @Html.LabelFor(model => model.PublicS, htmlAttributes: new { @class = "form-check-label" })
+                    </div>*@
+                <br>
+                <div class="form-group float-right">
+                    <input type="submit" value="Save" class="btn btn-secondary" />
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addSeason" title="Add details"><i class="fa fa-plus"></i>Add new</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="addSeason" tabindex="-1" role="dialog" aria-labelledby="addNewSeason" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewSeason">Add new season</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Season no.:</label>
+                    <div class="col-sm-10">
+                        <div class="controls">
+                            @{
+                                SeriesEntities db = new SeriesEntities();
+                                int lastSeason = db.Episodes.Where(s => s.Serial == Model.ID).OrderByDescending(s => s.Season).Select(s => s.Season).FirstOrDefault();
+                            }
+                            @Html.TextBox("SeasonNo", lastSeason + 1, new { @class = "form-control", @id = "SeasonNo" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Episodes no.:</label>
+                    <div class="col-sm-10">
+                        <div class="controls">
+                            @Html.Editor("EpisodesNo", new { htmlAttributes = new { @class = "form-control", @id = "EpisodesNo" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="addSeason" class="btn btn-secondary" onclick="AddEpisodes(@Model.ID)">Add details</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div id="divEpisodes" class="container overlay">
+    <br />
+    @Html.Partial("_SeasonsAndEpisodes", Model)
+</div>
+
+<script type="text/javascript" src="~/Scripts/script.js"></script>
