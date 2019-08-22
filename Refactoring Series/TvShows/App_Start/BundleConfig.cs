@@ -24,6 +24,8 @@ namespace TvShows
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/lightSlider").Include(
+                      "~/Scripts/lightslider.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryValidateJs").Include(
                         "~/Scripts/jquery.validate/jquery.validate.js",
@@ -32,6 +34,13 @@ namespace TvShows
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
+                     "~/Content/font-awesome.css",
+                new CssRewriteUrlTransform()));
+
+            bundles.Add(new StyleBundle("~/Content/lightSlider").Include(
+                      "~/Content/lightslider.css"));
         }
     }
 }

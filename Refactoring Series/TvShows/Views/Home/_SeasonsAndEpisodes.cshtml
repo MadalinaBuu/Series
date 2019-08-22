@@ -22,16 +22,16 @@
                        aria-controls=@collapseId>
                         <h3 class="seasonAccordion">
                             <strong>Season @i</strong>
-                            @*<button type="button" id="seenSeason" class="btnEpisode"><i class="fa fa-eye"></i></button>*@
                         </h3>
                     </a>
+                    @*<button type="button" id="seenSeason" class="btnEpisode"><i class="fa fa-eye"></i></button>*@
                 </div>
                 <div id=@collapseId class="collapse @(i  == seasons ? "show" : "")" role="tabpanel" aria-labelledby=@heading data-parent="#accordionEx">
                     <div class="panel-body">
                         <table class="table">
                             @foreach (var ep in episodes.Where(s => s.Season == i))
                             {
-                                <tr style="display: flex;justify-content: space-between;">
+                                <tr class="accordion-elements">
                                     <td>@ep.Title</td>
                                     <td>
                                         <button type="button" id="btnSeenEp" onclick="seenEpisode(@ep.ID, this)" class="btnEpisode @(ep.Seen == 1 ? "seen" : "unseen")">
@@ -47,4 +47,3 @@
         </div>
     }
 }
-<script type="text/javascript" src="~/Scripts/script.js"></script>

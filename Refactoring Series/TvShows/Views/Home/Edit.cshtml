@@ -5,12 +5,11 @@
 }
 @using System.Data;
 @using TvShows.Models;
-
 <div class="container overlay">
     @using (Html.BeginForm())
     {
         <br />
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <div class="card-header">
                 Serial details
             </div>
@@ -36,11 +35,14 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Seen)
                 </div>
-                @*<div class="form-check">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.CheckBoxFor(model => model.PublicS, new { @class = "form-check-input" })
-                        @Html.LabelFor(model => model.PublicS, htmlAttributes: new { @class = "form-check-label" })
-                    </div>*@
+                <div class="form-check">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @{
+                        bool publicS = @Model.PublicS == 1 ? true : false;
+                    }
+                    @Html.CheckBoxFor(model => publicS, new { @class = "form-check-input" })
+                    @Html.LabelFor(model => model.PublicS, htmlAttributes: new { @class = "form-check-label" })
+                </div>
                 <br>
                 <div class="form-group float-right">
                     <input type="submit" value="Save" class="btn btn-secondary" />
@@ -72,7 +74,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="col-sm-2 control-label"> Episodes no.:</label>
                     <div class="col-sm-10">
@@ -89,11 +90,14 @@
         </div>
     </div>
 </div>
-
 <br />
-<div id="divEpisodes" class="container overlay">
-    <br />
-    @Html.Partial("_SeasonsAndEpisodes", Model)
-</div>
-
-<script type="text/javascript" src="~/Scripts/script.js"></script>
+@{
+    bool areRecords = db.Episodes.Any(x => x.Serial == Model.ID);
+    if (areRecords)
+    {
+        <div id="divEpisodes" class="container overlay">
+            <br />
+            @Html.Partial("_SeasonsAndEpisodes", Model)
+        </div>
+    }
+}
